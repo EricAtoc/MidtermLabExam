@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+
+//This is where i change the StatefulWidget into StatelessWidget to define the method
+class Counter extends StatelessWidget {
+  final int count;
+  final VoidCallback onIncrement;
+
+  const Counter({
+    super.key, //In the super.key section, i add required method to call the count of the increment
+    required this.count, 
+    required this.onIncrement,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: onIncrement,
+          child: const Text('Increment'),
+        ),
+        const SizedBox(width: 16),
+        Text('Count: $count'),
+      ],
+    );
+  }
+}
+
+//I add again a StatefulWidget class for the counter section
+class CounterState extends StatefulWidget {
+  const CounterState({super.key});
+
+  @override
+  _CounterParentState createState() => _CounterParentState();
+}
+
+class _CounterParentState extends State<CounterState> {
+  int _counter = 0;
+
+  //This part involves on to counter how many times the increment being pressed
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Counter(
+        count: _counter,
+        onIncrement: _incrementCounter,
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(
+    const MaterialApp(
+      home: Scaffold(
+        body: CounterState(), 
+      ),
+    ),
+  );
+}
